@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  web:
+    image: odoo:11.0
+    hostname: wa_me
+    depends_on:
+      - db
+    volumes:
+      - web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+  db:
+    image: postgres:11.5
+    hostname: wa_me_db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  web-data:
+  db-data:
